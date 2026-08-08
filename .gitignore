@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data (raw datasets — keep out of git)
+data/raw/*
+!data/raw/.gitkeep
+
+models/*.pkl
+models/*.joblib
+!models/.gitkeep
+
+
+instance/
+*.log
+
+
+.DS_Store
+.vscode/
+*.swp
