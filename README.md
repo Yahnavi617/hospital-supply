@@ -11,7 +11,8 @@ Translate raw inventory/consumption data into a business-facing risk score so no
 - React (frontend dashboard)
 
 ## Status
-🚧 In progress — scaffolding set up, dataset selection and EDA next.
+✅ Data pipeline, feature engineering, and model training complete.
+🚧 Backend API and React dashboard in progress.
 
 ## Disclaimer
 Uses public/synthetic supply chain datasets adapted for a hospital inventory context. Portfolio/learning project — not connected to any real hospital's data or operations.

@@ -7,8 +7,9 @@ def load_data(raw_path='../data/raw'):
     return inventory, vendor
 
 def add_days_until_stockout(inventory):
-    """Calculate how many days until each item runs out at current usage rate."""
-    inventory['Days_Until_Stockout'] = inventory['Current_Stock'] / inventory['Avg_Usage_Per_Day']
+    """Calculate how many days until each item runs out at current usage rate.
+    Items with zero usage are treated as having a very large buffer (not at risk)."""
+    inventory['Days_Until_Stockout'] = inventory['Current_Stock'] / inventory['Avg_Usage_Per_Day'].replace(0, 0.01)
     return inventory
 
 def add_risk_label(inventory):
