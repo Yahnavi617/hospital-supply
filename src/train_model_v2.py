@@ -8,9 +8,8 @@ FEATURES = ['Current_Stock', 'Min_Required', 'Max_Capacity', 'Unit_Cost',
             'Avg_Usage_Per_Day', 'Restock_Lead_Time', 'Cost_Per_Item']
 TARGET = 'Risk_Label'
 
-def train_and_save_model(data_path='../data/processed/inventory_with_risk.csv',
-                          model_path='../models/risk_classifier.pkl'):
-    """Train a Random Forest risk classifier and save it to disk."""
+def train_and_save_model(data_path='../data/processed/inventory_synthetic_v2.csv',
+                          model_path='../models/risk_classifier_v2.pkl'):
     df = pd.read_csv(data_path)
     X = df[FEATURES]
     y = df[TARGET]
@@ -19,7 +18,7 @@ def train_and_save_model(data_path='../data/processed/inventory_with_risk.csv',
         X, y, test_size=0.2, random_state=42, stratify=y
     )
 
-    model = RandomForestClassifier(n_estimators=300, random_state=42, class_weight='balanced', max_depth=10)
+    model = RandomForestClassifier(n_estimators=100, random_state=42)
     model.fit(X_train, y_train)
 
     y_pred = model.predict(X_test)
