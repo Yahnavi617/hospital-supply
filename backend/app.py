@@ -20,8 +20,13 @@ def home():
 @app.route('/predict', methods=['GET'])
 def predict_all():
     predictions = predict_risk(model, data)
-    result = data[['Item_ID', 'Item_Name', 'Current_Stock', 'Restock_Lead_Time', 'Vendor_Name']].copy()
+    result = data[['Item_ID', 'Item_Name', 'Current_Stock', 'Restock_Lead_Time', 'Vendor_Name', 'Avg_Usage_Per_Day']].copy()
     result['Predicted_Risk'] = predictions
+    result['Days_Until_Stockout'] = (result['Current_Stock'] / result['Avg_Usage_Per_Day'].replace(0, 0.01)).round(1)
+    result['Reason'] = result.apply(
+        lambda row: f"Stock covers ~{row['Days_Until_Stockout']} days, but restock takes {row['Restock_Lead_Time']} days",
+        axis=1
+    )
     return jsonify(result.to_dict(orient='records'))
 
 @app.route('/health', methods=['GET'])

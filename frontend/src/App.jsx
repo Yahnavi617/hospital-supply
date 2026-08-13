@@ -61,6 +61,7 @@ function App() {
             <th>Restock Lead Time (days)</th>
             <th>Vendor</th>
             <th>Risk</th>
+            <th>Reason</th>
           </tr>
         </thead>
         <tbody>
@@ -70,6 +71,7 @@ function App() {
               <td>{item.Current_Stock}</td>
               <td>{item.Restock_Lead_Time}</td>
               <td>{item.Vendor_Name}</td>
+              <td className="reason-text">{item.Reason}</td>
               <td>
                 <span
                   className="risk-badge"
