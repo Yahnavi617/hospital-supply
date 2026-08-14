@@ -7,6 +7,7 @@ function App() {
     const [error, setError] = useState(null)
     const [filter, setFilter] = useState('All')
     const [search, setSearch] = useState('')
+    const [selectedItem, setSelectedItem] = useState(null)
 
   useEffect(() => {
     fetch('http://127.0.0.1:5000/predict')
@@ -95,12 +96,11 @@ function App() {
         </thead>
         <tbody>
           {filteredItems.map((item) => (
-            <tr key={item.Item_ID}>
+             <tr key={item.Item_ID} onClick={() => setSelectedItem(item)} style={{ cursor: 'pointer' }}>
               <td>{item.Item_Name}</td>
               <td>{item.Current_Stock}</td>
               <td>{item.Restock_Lead_Time}</td>
               <td>{item.Vendor_Name}</td>
-              <td className="reason-text">{item.Reason}</td>
               <td>
                 <span
                   className="risk-badge"
@@ -109,10 +109,40 @@ function App() {
                   {item.Predicted_Risk}
                 </span>
               </td>
+              <td className="reason-text">{item.Reason}</td>
             </tr>
           ))}
         </tbody>
       </table>
+
+    {selectedItem && (
+  <div className="modal-overlay" onClick={() => setSelectedItem(null)}>
+    <div className="modal" onClick={(e) => e.stopPropagation()}>
+      <button className="close-btn" onClick={() => setSelectedItem(null)}>×</button>
+      <h2>{selectedItem.Item_Name}</h2>
+      <span
+        className="risk-badge large"
+        style={{ backgroundColor: riskColor[selectedItem.Predicted_Risk] }}
+      >
+        {selectedItem.Predicted_Risk} Risk
+      </span>
+      <div className="detail-grid">
+        <div><strong>Current Stock:</strong> {selectedItem.Current_Stock} units</div>
+        <div><strong>Days Until Stockout:</strong> ~{selectedItem.Days_Until_Stockout} days</div>
+        <div><strong>Restock Lead Time:</strong> {selectedItem.Restock_Lead_Time} days</div>
+        <div><strong>Vendor:</strong> {selectedItem.Vendor_Name}</div>
+      </div>
+      <div className="why-box">
+        <strong>Why this risk level?</strong>
+        <p>{selectedItem.Reason}</p>
+      </div>
+      <p className="disclaimer-small">
+        This is a decision-support estimate based on a synthetic prototype model — not a guaranteed outcome or a substitute for professional judgment.
+      </p>
+    </div>
+  </div>
+  )}
+
     </div>
   )
 }
