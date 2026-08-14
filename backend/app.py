@@ -10,8 +10,8 @@ from predict import load_model, predict_risk
 app = Flask(__name__)
 CORS(app)
 
-model = load_model()
-data = pd.read_csv(os.path.join(os.path.dirname(__file__), '..', 'data', 'processed', 'inventory_with_risk.csv'))
+model = load_model(os.path.join(os.path.dirname(__file__), '..', 'models', 'risk_classifier_v2.pkl'))
+data = pd.read_csv(os.path.join(os.path.dirname(__file__), '..', 'data', 'processed', 'inventory_synthetic_v2.csv'))
 
 @app.route('/')
 def home():
