@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
-  const [items, setItems] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+    const [items, setItems] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
+    const [filter, setFilter] = useState('All')
+    const [search, setSearch] = useState('')
 
   useEffect(() => {
     fetch('http://127.0.0.1:5000/predict')
@@ -31,6 +33,12 @@ function App() {
     Low: '#27ae60',
   }
 
+  const filteredItems = items.filter((item) => {
+  const matchesFilter = filter === 'All' || item.Predicted_Risk === filter
+  const matchesSearch = item.Item_Name.toLowerCase().includes(search.toLowerCase())
+  return matchesFilter && matchesSearch
+  })
+
   if (loading) return <div className="status-message">Loading inventory data...</div>
   if (error) return <div className="status-message error">{error}</div>
 
@@ -53,6 +61,27 @@ function App() {
         </div>
       </div>
 
+
+         <div className="controls">
+  <div className="filter-buttons">
+    {['All', 'High', 'Medium', 'Low'].map((level) => (
+      <button
+        key={level}
+        className={filter === level ? 'active' : ''}
+        onClick={() => setFilter(level)}
+      >
+        {level}
+      </button>
+    ))}
+  </div>
+  <input
+    type="text"
+    placeholder="Search item name..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+  />
+          </div>
+
       <table>
         <thead>
           <tr>
@@ -65,7 +94,7 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {items.map((item) => (
+          {filteredItems.map((item) => (
             <tr key={item.Item_ID}>
               <td>{item.Item_Name}</td>
               <td>{item.Current_Stock}</td>
