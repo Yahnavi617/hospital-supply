@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-
+import { useNavigate } from 'react-router-dom'
 function Dashboard() {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
@@ -9,19 +9,32 @@ function Dashboard() {
   const [selectedItem, setSelectedItem] = useState(null)
   const [sortBy, setSortBy] = useState(null)
   const [sortDir, setSortDir] = useState('asc')
+  const navigate = useNavigate()
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/predict')
-      .then((res) => res.json())
-      .then((data) => {
+  fetch('http://127.0.0.1:5000/predict', {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+    },
+  })
+    .then((res) => {
+      if (res.status === 401) {
+        navigate('/login')
+        return null
+      }
+      return res.json()
+    })
+    .then((data) => {
+      if (data) {
         setItems(data)
         setLoading(false)
-      })
-      .catch((err) => {
-        setError('Could not connect to backend. Make sure Flask server is running.')
-        setLoading(false)
-      })
-  }, [])
+      }
+    })
+    .catch((err) => {
+      setError('Could not connect to backend. Make sure Flask server is running.')
+      setLoading(false)
+    })
+    }, [])
 
   const riskCounts = {
     High: items.filter((i) => i.Predicted_Risk === 'High').length,

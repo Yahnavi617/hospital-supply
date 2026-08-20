@@ -7,11 +7,25 @@ function Login() {
   const [error, setError] = useState('')
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // NOTE: this will be wired to a real Flask login endpoint next —
-    // for now this is just the page/route structure.
-    setError('Login is not connected to the backend yet.')
+    setError('')
+    try {
+      const res = await fetch('http://127.0.0.1:5000/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      })
+      const data = await res.json()
+      if (res.ok) {
+        localStorage.setItem('authToken', data.token)
+        navigate('/dashboard')
+      } else {
+        setError(data.error || 'Login failed')
+      }
+    } catch (err) {
+      setError('Could not connect to server')
+    }
   }
 
   return (
