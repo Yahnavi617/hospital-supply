@@ -57,7 +57,7 @@ def home():
 @require_auth
 def predict_all():
     predictions = predict_risk(model, data)
-    result = data[['Item_ID', 'Item_Name', 'Current_Stock', 'Restock_Lead_Time', 'Vendor_Name', 'Avg_Usage_Per_Day']].copy()
+    result = data[['Item_ID', 'Item_Name', 'Category', 'Current_Stock', 'Restock_Lead_Time', 'Vendor_Name', 'Avg_Usage_Per_Day']].copy()
     result['Predicted_Risk'] = predictions
     result['Days_Until_Stockout'] = (result['Current_Stock'] / result['Avg_Usage_Per_Day'].replace(0, 0.01)).round(1)
     result['Reason'] = result.apply(
