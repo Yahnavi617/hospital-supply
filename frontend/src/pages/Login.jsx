@@ -29,32 +29,65 @@ function Login() {
   }
 
   return (
-    <div className="login-page">
-      <form className="login-card" onSubmit={handleSubmit}>
-        <div className="brand-mark" style={{ margin: '0 auto 16px' }}>M</div>
-        <h1>MedTrack AI</h1>
-        <p className="login-sub">Sign in to access the risk dashboard</p>
+    <div className="login-split">
+      <div className="login-brand-panel">
+        <div className="login-brand-top">
+          <div className="brand-mark light">M</div>
+          <span className="login-brand-name">MedTrack AI</span>
+        </div>
 
-        <label>Username</label>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="admin"
-        />
+        <div className="login-brand-mid">
+          <h1>Know what's running low, before it runs out.</h1>
+          <p>
+            Real-time stockout risk across every SKU in your hospital's supply chain —
+            explained, not just predicted.
+          </p>
+        </div>
 
-        <label>Password</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="••••••••"
-        />
+        <div className="login-brand-stats">
+          <div>
+            <strong>2,500</strong>
+            <span>SKUs tracked</span>
+          </div>
+          <div>
+            <strong>3</strong>
+            <span>Risk tiers</span>
+          </div>
+          <div>
+            <strong>Live</strong>
+            <span>Model status</span>
+          </div>
+        </div>
+      </div>
 
-        {error && <div className="login-error">{error}</div>}
+      <div className="login-form-panel">
+        <form className="login-card" onSubmit={handleSubmit}>
+          <h2>Welcome back</h2>
+          <p className="login-sub">Sign in to access the risk dashboard</p>
 
-        <button type="submit" className="login-btn">Sign in</button>
-      </form>
+          <label>Username</label>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="admin"
+          />
+
+          <label>Password</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="••••••••"
+          />
+
+          {error && <div className="login-error">{error}</div>}
+
+          <button type="submit" className="login-btn">Sign in</button>
+
+          <p className="login-hint">Demo account — username: admin, password: hospital123</p>
+        </form>
+      </div>
     </div>
   )
 }

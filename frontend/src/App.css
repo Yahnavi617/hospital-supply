@@ -636,88 +636,155 @@ td.reason-text {
   font-size: 14px;
 }
 
-/* ---------- Login page ---------- */
+/* ================= Login page v2 (split screen) ================= */
+/* Replace the old ".login-page" and ".login-card" rules with these */
 
-.login-page {
+.login-split {
+  display: flex;
   min-height: 100vh;
+}
+
+.login-brand-panel {
+  flex: 1;
+  background: linear-gradient(160deg, var(--primary-start), var(--primary-end) 70%);
+  color: white;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-brand-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1.5px, transparent 1.5px);
+  background-size: 22px 22px;
+  opacity: 0.5;
+}
+
+.login-brand-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.brand-mark.light {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.18);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  backdrop-filter: blur(4px);
+}
+
+.login-brand-name {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.login-brand-mid {
+  position: relative;
+  z-index: 1;
+  max-width: 420px;
+}
+
+.login-brand-mid h1 {
+  font-family: 'Sora', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 16px;
+}
+
+.login-brand-mid p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+.login-brand-stats {
+  display: flex;
+  gap: 32px;
+  position: relative;
+  z-index: 1;
+}
+
+.login-brand-stats div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.login-brand-stats strong {
+  font-family: 'Sora', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.login-brand-stats span {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.login-form-panel {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--bg);
+  padding: 40px;
 }
 
 .login-card {
+  width: 100%;
+  max-width: 360px;
   background: var(--surface);
   border-radius: 20px;
   padding: 40px 36px;
-  width: 100%;
-  max-width: 360px;
-  text-align: center;
   box-shadow: 0 1px 2px rgba(24, 24, 27, 0.04), 0 20px 50px rgba(24, 24, 27, 0.08);
   border: 1px solid var(--border);
 }
 
-.login-card h1 {
+.login-card h2 {
   font-family: 'Sora', sans-serif;
-  font-size: 22px;
+  font-size: 24px;
   margin: 0 0 6px;
 }
 
-.login-sub {
-  font-size: 13px;
+.login-hint {
+  margin-top: 16px;
+  font-size: 11px;
   color: var(--ink-soft);
-  margin: 0 0 24px;
+  text-align: center;
 }
 
-.login-card label {
-  display: block;
-  text-align: left;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--ink-soft);
-  margin: 14px 0 6px;
-}
-
-.login-card input {
-  width: 100%;
-  padding: 10px 14px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 14px;
-}
-
-.login-card input:focus {
-  outline: none;
-  border-color: var(--primary-start);
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
-}
-
-.login-error {
-  margin-top: 14px;
-  font-size: 12px;
-  color: var(--high);
-  background: var(--high-tint);
-  padding: 8px 12px;
-  border-radius: 8px;
-}
-
-.login-btn {
-  width: 100%;
-  margin-top: 22px;
-  padding: 11px;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(135deg, var(--primary-start), var(--primary-end));
-  color: white;
-  font-weight: 700;
-  font-size: 14px;
-  cursor: pointer;
-  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.3);
-}
-
-.login-btn:hover {
-  opacity: 0.92;
+@media (max-width: 860px) {
+  .login-split {
+    flex-direction: column;
+  }
+  .login-brand-panel {
+    padding: 32px 24px;
+    min-height: 220px;
+  }
+  .login-brand-mid h1 {
+    font-size: 22px;
+  }
+  .login-brand-stats {
+    gap: 20px;
+  }
 }
 
 /* ---------- Sortable table headers ---------- */
