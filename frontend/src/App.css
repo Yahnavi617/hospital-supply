@@ -28,26 +28,106 @@ body {
   color: var(--ink);
 }
 
-.dashboard {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 28px 24px 70px;
-  transition: filter 0.25s ease;
-}
+/* ================= App shell / sidebar layout ================= */
 
-/* ---------- Top bar ---------- */
-
-.topbar {
+.app-shell {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 28px;
+  min-height: 100vh;
 }
 
-.brand {
+.sidebar {
+  width: 220px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 22px 16px;
+  flex-shrink: 0;
+}
+
+.sidebar-brand {
   display: flex;
   align-items: center;
   gap: 10px;
+  padding: 0 8px 24px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav-icon {
+  font-size: 15px;
+  width: 18px;
+  text-align: center;
+}
+
+.nav-item:hover {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.nav-item.active {
+  background: linear-gradient(135deg, var(--primary-start), var(--primary-end));
+  color: white;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: none;
+  background: none;
+  color: var(--ink-soft);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+}
+
+.logout-btn:hover {
+  background: var(--high-tint);
+  color: var(--high);
+}
+
+.main-area {
+  flex: 1;
+  padding: 20px 32px 60px;
+  max-width: 1180px;
+}
+
+.main-area .topbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.page-content {
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .brand-mark {
@@ -89,6 +169,7 @@ body {
   background: var(--low-tint);
   padding: 6px 12px;
   border-radius: 20px;
+  width: fit-content;
 }
 
 .live-badge .dot {
@@ -111,6 +192,7 @@ body {
   font-weight: 700;
   margin: 0 0 6px;
   letter-spacing: -0.01em;
+  color: var(--ink);
 }
 
 .page-head p {
@@ -161,6 +243,7 @@ body {
   font-weight: 700;
   line-height: 1;
   margin-bottom: 6px;
+  color: var(--ink);
 }
 
 .card-sub {
@@ -277,6 +360,15 @@ thead th {
   border-bottom: 1px solid var(--border);
 }
 
+thead th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+thead th.sortable:hover {
+  color: var(--ink);
+}
+
 tbody tr {
   border-bottom: 1px solid var(--border);
   cursor: pointer;
@@ -334,7 +426,7 @@ td.reason-text {
   font-size: 12px;
 }
 
-/* ---------- Side panel ---------- */
+/* ---------- Side panel (item detail) ---------- */
 
 .side-panel-overlay {
   position: fixed;
@@ -386,6 +478,7 @@ td.reason-text {
   font-size: 21px;
   margin: 0 0 10px;
   padding-right: 30px;
+  color: var(--ink);
 }
 
 .panel-desc {
@@ -476,168 +569,7 @@ td.reason-text {
   font-style: italic;
 }
 
-/* ---------- Status messages ---------- */
-
-.status-message {
-  text-align: center;
-  margin-top: 120px;
-  font-size: 15px;
-  color: var(--ink-soft);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
-.status-message.error {
-  color: var(--high);
-}
-
-/* ---------- Responsive ---------- */
-
-@media (max-width: 720px) {
-  .summary-cards {
-    grid-template-columns: 1fr;
-  }
-  .controls {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .search-wrap {
-    max-width: none;
-  }
-  table, thead, tbody, th, td, tr {
-    display: block;
-  }
-  thead tr {
-    display: none;
-  }
-  tbody tr {
-    padding: 14px 16px;
-  }
-  td {
-    padding: 4px 0;
-    border: none;
-  }
-  td.reason-text {
-    max-width: none;
-  }
-  .side-panel {
-    max-width: 100%;
-  }
-}
-
-/* ================= Multi-page layout additions ================= */
-
-.app-shell {
-  display: flex;
-  min-height: 100vh;
-}
-
-.sidebar {
-  width: 220px;
-  background: var(--surface);
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  padding: 22px 16px;
-  flex-shrink: 0;
-}
-
-.sidebar-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0 8px 24px;
-}
-
-.sidebar-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  flex: 1;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  color: var(--ink-soft);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 600;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-
-.nav-icon {
-  font-size: 15px;
-  width: 18px;
-  text-align: center;
-}
-
-.nav-item:hover {
-  background: var(--bg);
-  color: var(--ink);
-}
-
-.nav-item.active {
-  background: linear-gradient(135deg, var(--primary-start), var(--primary-end));
-  color: white;
-  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
-}
-
-.logout-btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: none;
-  background: none;
-  color: var(--ink-soft);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  text-align: left;
-}
-
-.logout-btn:hover {
-  background: var(--high-tint);
-  color: var(--high);
-}
-
-.main-area {
-  flex: 1;
-  padding: 20px 32px 60px;
-  max-width: 1180px;
-}
-
-.main-area .topbar {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 12px;
-}
-
-.page-content {
-  animation: fadeIn 0.2s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.placeholder-box {
-  background: var(--surface);
-  border: 1px dashed var(--border);
-  border-radius: 16px;
-  padding: 60px 20px;
-  text-align: center;
-  color: var(--ink-soft);
-  font-size: 14px;
-}
-
-/* ================= Login page v2 (split screen) ================= */
-/* Replace the old ".login-page" and ".login-card" rules with these */
+/* ================= Login page (split screen) ================= */
 
 .login-split {
   display: flex;
@@ -686,12 +618,14 @@ td.reason-text {
   font-weight: 700;
   font-size: 16px;
   backdrop-filter: blur(4px);
+  box-shadow: none;
 }
 
 .login-brand-name {
   font-family: 'Sora', sans-serif;
   font-weight: 700;
   font-size: 16px;
+  color: white;
 }
 
 .login-brand-mid {
@@ -706,6 +640,7 @@ td.reason-text {
   font-weight: 700;
   line-height: 1.25;
   margin: 0 0 16px;
+  color: white;
 }
 
 .login-brand-mid p {
@@ -732,6 +667,7 @@ td.reason-text {
   font-family: 'Sora', sans-serif;
   font-size: 22px;
   font-weight: 700;
+  color: white;
 }
 
 .login-brand-stats span {
@@ -756,12 +692,74 @@ td.reason-text {
   padding: 40px 36px;
   box-shadow: 0 1px 2px rgba(24, 24, 27, 0.04), 0 20px 50px rgba(24, 24, 27, 0.08);
   border: 1px solid var(--border);
+  text-align: center;
 }
 
 .login-card h2 {
   font-family: 'Sora', sans-serif;
   font-size: 24px;
+  font-weight: 700;
   margin: 0 0 6px;
+  color: var(--ink);
+}
+
+.login-sub {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0 0 24px;
+}
+
+.login-card label {
+  display: block;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin: 14px 0 6px;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.login-card input:focus {
+  outline: none;
+  border-color: var(--primary-start);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+.login-error {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--high);
+  background: var(--high-tint);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.login-btn {
+  width: 100%;
+  margin-top: 22px;
+  padding: 11px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--primary-start), var(--primary-end));
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.3);
+}
+
+.login-btn:hover {
+  opacity: 0.92;
 }
 
 .login-hint {
@@ -771,55 +769,8 @@ td.reason-text {
   text-align: center;
 }
 
-@media (max-width: 860px) {
-  .login-split {
-    flex-direction: column;
-  }
-  .login-brand-panel {
-    padding: 32px 24px;
-    min-height: 220px;
-  }
-  .login-brand-mid h1 {
-    font-size: 22px;
-  }
-  .login-brand-stats {
-    gap: 20px;
-  }
-}
+/* ================= Analytics page ================= */
 
-/* ---------- Sortable table headers ---------- */
-
-thead th.sortable {
-  cursor: pointer;
-  user-select: none;
-}
-
-thead th.sortable:hover {
-  color: var(--ink);
-}
-
-/* ---------- Responsive ---------- */
-
-@media (max-width: 860px) {
-  .app-shell {
-    flex-direction: column;
-  }
-  .sidebar {
-    width: 100%;
-    flex-direction: row;
-    align-items: center;
-    padding: 12px 16px;
-  }
-  .sidebar-nav {
-    flex-direction: row;
-  }
-  .logout-btn {
-    margin-left: auto;
-  }
-  .main-area {
-    padding: 16px;
-  }
-}
 .analytics-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -838,13 +789,10 @@ thead th.sortable:hover {
   font-family: 'Sora', sans-serif;
   font-size: 15px;
   margin: 0 0 12px;
+  color: var(--ink);
 }
 
-@media (max-width: 860px) {
-  .analytics-grid {
-    grid-template-columns: 1fr;
-  }
-}
+/* ================= Reports page ================= */
 
 .report-card {
   background: var(--surface);
@@ -900,4 +848,96 @@ thead th.sortable:hover {
 
 .download-btn:hover {
   opacity: 0.92;
+}
+
+/* ---------- Status / placeholder messages ---------- */
+
+.status-message {
+  text-align: center;
+  margin-top: 120px;
+  font-size: 15px;
+  color: var(--ink-soft);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.status-message.error {
+  color: var(--high);
+}
+
+.placeholder-box {
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: 16px;
+  padding: 60px 20px;
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 860px) {
+  .app-shell {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 16px;
+  }
+  .sidebar-nav {
+    flex-direction: row;
+  }
+  .logout-btn {
+    margin-left: auto;
+  }
+  .main-area {
+    padding: 16px;
+  }
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-wrap {
+    max-width: none;
+  }
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+  thead tr {
+    display: none;
+  }
+  tbody tr {
+    padding: 14px 16px;
+  }
+  td {
+    padding: 4px 0;
+    border: none;
+  }
+  td.reason-text {
+    max-width: none;
+  }
+  .side-panel {
+    max-width: 100%;
+  }
+  .login-split {
+    flex-direction: column;
+  }
+  .login-brand-panel {
+    padding: 32px 24px;
+    min-height: 220px;
+  }
+  .login-brand-mid h1 {
+    font-size: 22px;
+  }
+  .login-brand-stats {
+    gap: 20px;
+  }
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
 }
