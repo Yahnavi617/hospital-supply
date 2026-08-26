@@ -40,7 +40,7 @@ function Login() {
           <h1>Know what's running low, before it runs out.</h1>
           <p>
             Real-time stockout risk across every SKU in your hospital's supply chain —
-            explained, not just predicted.
+            explained in very good manner .
           </p>
         </div>
 
