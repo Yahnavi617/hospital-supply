@@ -201,63 +201,172 @@ body {
   font-size: 14px;
 }
 
-/* ---------- Summary cards ---------- */
+/* ================= Summary Cards ================= */
 
 .summary-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 18px;
+  margin-bottom: 28px;
 }
 
 .card {
-  background: var(--surface);
-  border-radius: 16px;
-  padding: 20px 22px;
-  box-shadow: 0 1px 2px rgba(24, 24, 27, 0.04), 0 8px 24px rgba(24, 24, 27, 0.04);
+  position: relative;
+  background: #ffffff;
   border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 22px 24px;
+  min-height: 150px;
+  overflow: hidden;
+
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 24px rgba(15, 23, 42, 0.04);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
+
+.card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 4px 6px rgba(15, 23, 42, 0.05),
+    0 12px 30px rgba(15, 23, 42, 0.07);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  border-radius: 16px 0 0 16px;
+}
+
+/* ---------- Card Top ---------- */
 
 .card-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  gap: 12px;
 }
 
 .card-label {
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  letter-spacing: 0.2px;
 }
 
 .card-icon {
-  font-size: 14px;
-  opacity: 0.7;
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 700;
 }
 
+/* ---------- Number ---------- */
+
 .card-number {
+  margin-top: 14px;
+
   font-family: 'Sora', sans-serif;
-  font-size: 34px;
-  font-weight: 700;
+  font-size: 32px;
   line-height: 1;
-  margin-bottom: 6px;
+  font-weight: 700;
+  letter-spacing: -0.8px;
   color: var(--ink);
 }
 
+/* ---------- Subtitle ---------- */
+
 .card-sub {
+  margin-top: 10px;
+
   font-size: 12px;
+  line-height: 1.4;
   color: var(--ink-soft);
 }
 
-.card-high .card-label, .card-high .card-icon { color: var(--high); }
-.card-medium .card-label, .card-medium .card-icon { color: var(--medium); }
-.card-low .card-label, .card-low .card-icon { color: var(--low); }
+/* ================= High Risk ================= */
 
-.card-high { background: linear-gradient(180deg, var(--high-tint), var(--surface) 60%); }
-.card-medium { background: linear-gradient(180deg, var(--medium-tint), var(--surface) 60%); }
-.card-low { background: linear-gradient(180deg, var(--low-tint), var(--surface) 60%); }
+.card-high {
+  border-color: rgba(220, 38, 38, 0.15);
+}
+
+.card-high::before {
+  background: var(--high);
+}
+
+.card-high .card-icon {
+  background: rgba(220, 38, 38, 0.08);
+  color: var(--high);
+}
+
+.card-high .card-number {
+  color: #b91c1c;
+}
+
+/* ================= Medium Risk ================= */
+
+.card-medium {
+  border-color: rgba(217, 119, 6, 0.15);
+}
+
+.card-medium::before {
+  background: var(--medium);
+}
+
+.card-medium .card-icon {
+  background: rgba(217, 119, 6, 0.08);
+  color: var(--medium);
+}
+
+.card-medium .card-number {
+  color: #b7791f;
+}
+
+/* ================= Low Risk ================= */
+
+.card-low {
+  border-color: rgba(5, 150, 105, 0.15);
+}
+
+.card-low::before {
+  background: var(--low);
+}
+
+.card-low .card-icon {
+  background: rgba(5, 150, 105, 0.08);
+  color: var(--low);
+}
+
+.card-low .card-number {
+  color: #047857;
+}
+
+/* ================= Responsive ================= */
+
+@media (max-width: 900px) {
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    min-height: 135px;
+  }
+}
 
 /* ---------- Controls ---------- */
 
