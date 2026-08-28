@@ -64,7 +64,22 @@ def predict_all():
         lambda row: f"Stock covers ~{row['Days_Until_Stockout']} days, but restock takes {row['Restock_Lead_Time']} days",
         axis=1
     )
+
+   
+    def get_recommendation(row):
+     if row['Predicted_Risk'] == 'High':
+        if row['Days_Until_Stockout'] < row['Restock_Lead_Time']:
+            return 'Urgent Restock'
+        return 'Place Order Soon'
+     elif row['Predicted_Risk'] == 'Medium':
+        return 'Plan Replenishment'
+     else:
+        return 'No Immediate Action'
+
+    result['Recommended_Action'] = result.apply(get_recommendation, axis=1)
+
     return jsonify(result.to_dict(orient='records'))
+
 
 @app.route('/health', methods=['GET'])
 def health_check():
