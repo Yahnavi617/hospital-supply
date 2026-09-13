@@ -61,6 +61,27 @@ function Reports() {
     document.body.removeChild(link)
   }
 
+  // --- Derived insights for the summary section (computed from real data) ---
+  const avgStockout = filteredItems.length
+    ? (
+        filteredItems.reduce((sum, i) => sum + Number(i.Days_Until_Stockout || 0), 0) /
+        filteredItems.length
+      ).toFixed(1)
+    : '—'
+
+  const countBy = (key) => {
+    const counts = {}
+    filteredItems.forEach((i) => {
+      const val = i[key]
+      if (val) counts[val] = (counts[val] || 0) + 1
+    })
+    const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1])
+    return sorted.length ? sorted[0] : ['—', 0]
+  }
+
+  const [topCategory, topCategoryCount] = countBy('Category')
+  const [topVendor, topVendorCount] = countBy('Vendor_Name')
+
   if (loading) return <div className="status-message">Loading report data...</div>
 
   return (
@@ -163,6 +184,34 @@ function Reports() {
             </tbody>
           </table>
         </div>
+      </div>
+
+      <div className="insight-card">
+        <h3>Report Summary</h3>
+        <div className="insight-grid">
+          <div className="insight-box">
+            <span className="insight-label">Avg. days to stockout</span>
+            <span className="insight-value">{avgStockout}<small>days</small></span>
+          </div>
+          <div className="insight-box">
+            <span className="insight-label">Top affected category</span>
+            <span className="insight-value small">{topCategory}</span>
+            <span className="insight-footnote">{topCategoryCount} items</span>
+          </div>
+          <div className="insight-box">
+            <span className="insight-label">Top affected vendor</span>
+            <span className="insight-value small">{topVendor}</span>
+            <span className="insight-footnote">{topVendorCount} items</span>
+          </div>
+        </div>
+        <p className="insight-text">
+          Within the current selection ({filter === 'All' ? 'all risk levels' : `${filter} risk`}),
+          items have an average stock coverage of {avgStockout} days. {topCategory !== '—' && (
+            <>The <strong>{topCategory}</strong> category accounts for the largest share of these
+            items, and <strong>{topVendor}</strong> is the most represented vendor — useful starting
+            points for a procurement review.</>
+          )}
+        </p>
       </div>
     </div>
   )
