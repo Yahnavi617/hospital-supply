@@ -1107,3 +1107,88 @@ td.reason-text {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- Reports: Report Summary insight card ---------- */
+
+.insight-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 20px;
+  box-shadow: 0 1px 2px rgba(24, 24, 27, 0.04), 0 8px 24px rgba(24, 24, 27, 0.04);
+}
+
+.insight-card h3 {
+  font-family: 'Sora', sans-serif;
+  font-size: 15px;
+  margin: 0 0 16px;
+  color: var(--ink);
+}
+
+.insight-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.insight-box {
+  background: var(--bg);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.insight-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.insight-value {
+  font-family: 'Sora', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.insight-value.small {
+  font-size: 15px;
+}
+
+.insight-value small {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  margin-left: 4px;
+}
+
+.insight-footnote {
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+.insight-text {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  margin: 0;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.insight-text strong {
+  color: var(--ink);
+}
+
+@media (max-width: 860px) {
+  .insight-grid {
+    grid-template-columns: 1fr;
+  }
+}
