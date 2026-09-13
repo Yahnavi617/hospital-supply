@@ -143,6 +143,7 @@ function Dashboard() {
               <th>Vendor</th>
               <th>Risk</th>
               <th>Reason</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -162,6 +163,7 @@ function Dashboard() {
                   </span>
                 </td>
                 <td className="reason-text">{item.Reason}</td>
+                <td>{item.Recommended_Action}</td>
               </tr>
             ))}
           </tbody>
