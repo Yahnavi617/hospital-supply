@@ -29,6 +29,12 @@ function Reports() {
       .catch(() => setLoading(false))
   }, [])
 
+  const riskCounts = {
+    High: items.filter((i) => i.Predicted_Risk === 'High').length,
+    Medium: items.filter((i) => i.Predicted_Risk === 'Medium').length,
+    Low: items.filter((i) => i.Predicted_Risk === 'Low').length,
+  }
+
   const filteredItems = items.filter(
     (item) => filter === 'All' || item.Predicted_Risk === filter
   )
@@ -64,36 +70,99 @@ function Reports() {
         <p>Export inventory risk data for offline review.</p>
       </div>
 
-      <div className="report-card">
-        <div className="report-row">
-          <div>
-            <div className="report-label">Risk level</div>
-            <div className="filter-buttons">
-              {['All', 'High', 'Medium', 'Low'].map((level) => (
-                <button
-                  key={level}
-                  className={filter === level ? 'active' : ''}
-                  onClick={() => setFilter(level)}
-                >
-                  {level}
-                </button>
-              ))}
+      <div className="summary-cards">
+        <div className="card card-high">
+          <div className="card-top">
+            <span className="card-label">High Risk</span>
+            <span className="card-icon">⚠</span>
+          </div>
+          <div className="card-number">{riskCounts.High}</div>
+          <div className="card-sub">Available for export</div>
+        </div>
+        <div className="card card-medium">
+          <div className="card-top">
+            <span className="card-label">Medium Risk</span>
+            <span className="card-icon">◎</span>
+          </div>
+          <div className="card-number">{riskCounts.Medium}</div>
+          <div className="card-sub">Available for export</div>
+        </div>
+        <div className="card card-low">
+          <div className="card-top">
+            <span className="card-label">Low Risk</span>
+            <span className="card-icon">✓</span>
+          </div>
+          <div className="card-number">{riskCounts.Low}</div>
+          <div className="card-sub">Available for export</div>
+        </div>
+      </div>
+
+      <div className="reports-layout">
+        <div className="report-card">
+          <div className="report-row">
+            <div>
+              <div className="report-label">Risk level</div>
+              <div className="filter-buttons">
+                {['All', 'High', 'Medium', 'Low'].map((level) => (
+                  <button
+                    key={level}
+                    className={filter === level ? 'active' : ''}
+                    onClick={() => setFilter(level)}
+                  >
+                    {level}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="report-count">
+              <span className="report-count-num">{filteredItems.length}</span>
+              <span>items in this report</span>
             </div>
           </div>
-          <div className="report-count">
-            <span className="report-count-num">{filteredItems.length}</span>
-            <span>items in this report</span>
-          </div>
+
+          <button className="download-btn" onClick={downloadCSV}>
+            Download CSV
+          </button>
+
+          <p className="disclaimer-small" style={{ marginTop: 16 }}>
+            Export reflects live prototype data based on the current risk model — for
+            demonstration and offline review purposes.
+          </p>
         </div>
 
-        <button className="download-btn" onClick={downloadCSV}>
-          ⬇ Download CSV
-        </button>
-
-        <p className="disclaimer-small" style={{ marginTop: 16 }}>
-          Export reflects live prototype data based on the current risk model — for demonstration
-          and offline review purposes.
-        </p>
+        <div className="preview-card">
+          <h3>Preview</h3>
+          <p className="preview-sub">First 6 items in the current selection</p>
+          <table className="preview-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Risk</th>
+                <th>Stockout</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredItems.slice(0, 6).map((item) => (
+                <tr key={item.Item_ID}>
+                  <td>{item.Item_Name}</td>
+                  <td>
+                    <span className={`risk-chip risk-${item.Predicted_Risk.toLowerCase()}`}>
+                      {item.Predicted_Risk}
+                    </span>
+                  </td>
+                  <td className="num">~{item.Days_Until_Stockout}d</td>
+                </tr>
+              ))}
+              {filteredItems.length === 0 && (
+                <tr>
+                  <td colSpan="3" style={{ textAlign: 'center', color: 'var(--ink-soft)' }}>
+                    No items match this filter
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   )
