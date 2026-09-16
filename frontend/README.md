@@ -19,7 +19,17 @@ MedTrack AI predicts which inventory items are at risk of stocking out — class
 
 ## Screenshots
 
-*(Add screenshots here: Login, Dashboard, Analytics, Reports)*
+**Login**
+![Login](screenshots/login.png)
+
+**Dashboard**
+![Dashboard](screenshots/dashboard.png)
+
+**Analytics**
+![Analytics](screenshots/analytics.png)
+
+**Reports**
+![Reports](screenshots/reports.png)
 
 ## Architecture
 
