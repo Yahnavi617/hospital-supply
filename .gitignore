@@ -12,9 +12,9 @@ env/
 data/raw/*
 !data/raw/.gitkeep
 
-models/*.pkl
-models/*.joblib
-!models/.gitkeep
+#models/*.pkl
+#models/*.joblib
+#!models/.gitkeep
 
 
 instance/
