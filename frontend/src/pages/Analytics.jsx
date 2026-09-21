@@ -11,7 +11,7 @@ function Analytics() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/predict', {
+    fetch('https://medtrack-cje5.onrender.com/predict', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('authToken')}`,
       },
