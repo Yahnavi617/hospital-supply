@@ -12,7 +12,10 @@ MedTrack AI predicts which inventory items are at risk of stocking out — class
 
 ## Live Demo
 
-*(Add your deployed link here once deployed)*
+- App: https://hospitalsupplychain.vercel.app
+- Demo login: `admin` / `hospital123`
+
+*Note: the backend runs on a free tier and may take up to a minute to wake up on the first request.*
 
 - Frontend: `<vercel-link>`
 - Demo login: `admin` / `hospital123`
